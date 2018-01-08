@@ -1,0 +1,3 @@
+/* root项目依赖的项目   单项目可以不加这个配置*/
+
+rootProject.name = 'mytest'

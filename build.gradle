@@ -1,0 +1,98 @@
+/*依赖的插件*/
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+/*打包配置*/
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': version
+    }
+}
+
+/*第三方库来源*/
+repositories {
+    mavenCentral()
+}
+
+
+/*gradle 自身需要的依赖放在这里面，插件 就需要放在这里面*/
+buildscript {
+ ext {
+ springBootVersion = "1.2.3.RELEASE"
+}
+ repositories {
+ mavenLocal()
+   mavenCentral()
+ jcenter()   /*是一个插件仓库，导入的插件将会在仓库中寻找并下载*/
+ maven { url "http://repo.spring.io/snapshot" }
+ maven { url "http://repo.spring.io/milestone" }
+ maven { url "http://repo.spring.io/plugins-release"}
+  maven { url "https://mvnrepository.com"}
+
+ }
+ dependencies {
+ /*必须配置，不然没法用springboot插件，自身用的依赖都放到这里*/
+ classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+ }
+
+}
+/*声明依赖*/
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    
+     compile  'org.springframework.boot:spring-boot:1.5.4.RELEASE'
+     compile("org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE")
+     compile  'org.springframework.boot:spring-boot-autoconfigure:1.5.4.RELEASE'
+
+ 
+     testCompile group: 'junit', name: 'junit', version: '4.+'
+
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+/*加不加 task的区别*/
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+    
+    println '哈哈哈哈'
+}
+
+/*自定义的task，后面自定义构建玩一下*/
+task testtask {
+
+    
+    println '哈哈哈哈'
+}
+
+
+task testtask1(dependsOn:testtask) {
+
+    
+    println '哈哈哈哈1'
+}
+
+/* 覆盖默认task*/
+clean {
+
+println '测试clean，覆盖默认'
+
+}
+
+
+task addTask(group:'测试组',description:'task的描述'){
+
+
+}
